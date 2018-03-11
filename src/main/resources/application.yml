@@ -1,0 +1,59 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: APIGW
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  zipkin:
+    baseUrl: http://msa-trace.development.svc.cluster.local:9411
+  sleuth:
+    sampler:
+      percentage: 0.2
+zuul:
+  debug:
+    include-debug-header: true
+    request: true
+  routes:
+    client:
+      path: /client/**
+      serviceId: CLIENT
+    user:
+      path: /user/**
+      serviceId: USER
+    oauth:
+      path: /oauth/**
+      serviceId: OAUTH
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    preferIpAddress: true
+    instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+    leaseRenewalIntervalInSeconds: 3
+    leaseExpirationDurationInSeconds: 5
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 120000
+ribbon:
+  ConnectTimeout: 3000
+  ReadTimeout: 60000
+security:
+  oauth2:
+    resource:
+      id: API
+      loadBalanced: true
+      jwt:
+        keyValue: -----BEGIN PUBLIC KEY-----
+                  MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAh/0vQBm/mJfc9d0IaQf8
+                  UYVIq6nOpALU6MB5w5sc9a4PBit9uqqaBMd9MCecYkM1ESLO062mPcUHnFl4+BW3
+                  aLr6WEDTbgL6CKBkHq8OtwIHIIwXzGuVawhneV/KLCIEi77npqRRXxieXuimbA49
+                  akZmbsQfjz34wU64LXz50GLOpXHGIgks9xZdo9AiKhvBl++xMhWZIwRl5qb5c/dn
+                  pLLeSb2Nd9QheRNIapiamGm8zDB6ya0E3PCNmWkCNdZJPc9ismp8/J9l1HaPqHHa
+                  E+iun4455RL47hWjrwwKbNgSTra1LQ0IOh65Dls/9EC1M0fVRCbwHUd2iXOT4Xxx
+                  KQIDAQAB
+                  -----END PUBLIC KEY-----
