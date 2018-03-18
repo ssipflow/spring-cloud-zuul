@@ -10,7 +10,7 @@ spec:
       - path: /
         backend:
           serviceName: apigw
-          servicePort: 8888
+          servicePort: 8080
 ---
 kind: Service
 apiVersion: v1
