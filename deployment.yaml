@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: config
+  name: zuul
 spec:
   rules:
   - host: api.k8s.com
