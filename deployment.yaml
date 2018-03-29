@@ -46,7 +46,7 @@ spec:
       subdomain: spring-cloud-zuul
       containers:
       - name: spring-cloud-zuul
-        image: hubtea/spring-cloud-zuul:latest
+        image: ssipflow/spring-cloud-zuul:latest
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: dev
